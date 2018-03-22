@@ -1,6 +1,9 @@
-var x = document.getElementByID("slider");
-x.addEventListener();
+function changeColor() {
+var body = document.querySelector('body');
 
-function myFunction() {
-  document.body.style.backgroundColor = 'black';
+if(body.style.backgroundColor == 'black'){
+  body.style.backgroundColor = 'white';
+} else {
+  body.style.backgroundColor = 'black';
+}
 }
