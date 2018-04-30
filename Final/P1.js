@@ -1,11 +1,11 @@
-// ball settings
+// ball settings, ball1 = left/right, ball2 = up/down
 var ball1 = 0;
 var ball2 = 0;
 var ballSize = 8;
 
 // paddle settings
-var paddle1 = 0;
-var paddle2 = 0;
+var paddle1 = 0; // left paddle
+var paddle2 = 0; // right paddle, hidden off screen
 var paddleWidth = 15;
 var paddleHeight = 75;
 
@@ -13,11 +13,11 @@ var paddleHeight = 75;
 var x_speed = 10;
 var y_speed = x_speed;
 var comp_speed = 8;
-var collision = 0;
+var collision = 0; // once ball touches paddle1
 
 // player points
 var player1_points = 0;
-var player2_points = 0;
+var player2_points = 0; // not counting
 
 // 5 points will end the game
 var gameEnds = 5;
@@ -25,83 +25,34 @@ var resetGame = false;
 
 // window.onload will load everything once the the page laods
 window.onload = function ()  {
-
+		// pop-up box with instructions
 		alert("Welcome to 'PLAYER ONE'.")
 		alert("Use your mouse to move the board up/down to prevent the ball from getting by.")
 
+		// gets canvas from html, sets it to '2d', 60 fps
 		var canvas = document.getElementById('createcanvas');
 		var context = canvas.getContext('2d');
 		var runGame = setInterval(run,  1000/60);
 
 		// clientY returns the vertical coordinate
-		canvas.addEventListener('mousemove', function (x) {
-				paddle1 = x.clientY - canvas.height / 2;
-		});
-
-		// clientY returns the vertical coordinate
+		// this allows the mouse to control paddle1
 		canvas.addEventListener('mousemove', function (x) {
 				paddle1 = x.clientY - canvas.height / 2;
 		});
 
 		function ballReset() {
 				// ball start location
+				// half of width/height will set it towards the center
 				ball1 = canvas.width / 2;
 				ball2 = canvas.height / 2;
-				x_speed = -x_speed;
-				y_speed = 10;
+				x_speed = -x_speed; // it starts going down
+				y_speed = 10; // set speed of ball
 		}
 
+		// this sets the speed of the ball when traveling up/down/left/right
 		function ballMovement() {
 				ball1 += x_speed;
 				ball2 += y_speed;
-		}
-
-		function AI_paddle() {
-				// Move the AI paddle based on the position of the ball
-				if (paddle2 + paddleHeight / 2 < ball2) {
-						paddle2 += comp_speed;
-				} else {
-						paddle2 -= comp_speed;
-				}
-		}
-
-		function bounce() {
-			  // Bounce the ball off the top of the screen
-				if (ball2 < 0 && y_speed < 0) {
-						y_speed = -y_speed; // if the ball hits the top, then it will go down
-				}
-
-				// Bounce the ball off the bottom of the screen
-				if (ball2 > canvas.height && y_speed > 0) {
-						y_speed = -y_speed; // if the ball hits the bottom, it will go top
-				}
-
-				// Bounces off left
-				// if the ball hits the paddle, it bounces off
-				if (ball1 < 0) {
-						if (ball2 > paddle1 && ball2 < paddle1 + paddleHeight) {
-								x_speed =- x_speed;
-								z_speed = ball2 - (paddle1 + paddleHeight/2);
-								y_speed = z_speed * .3;
-								collision += 1;
-								console.log('collision ' + collision);
-						} else {
-								player2_points++; // increments points
-								ballReset(); // ball will restart in the middle
-						}
-				}
-
-				// Bounces off right
-				if (ball1 > canvas.width){
-						if (ball2 > paddle2 && ball2 < paddle2 + paddleHeight) {
-								x_speed =- x_speed; // if it hits the right side, it will bounce off
-								z_speed = ball2 - (paddle2 + paddleHeight / 2);
-								y_speed = z_speed * .3;
-						} else {
-								player1_points++;
-								ballReset();
-						}
-				}
 		}
 
 		function canvasSettings() {
@@ -131,7 +82,7 @@ window.onload = function ()  {
 				//clearTimeout(Game);
 				context.fillStyle = 'white';
 				context.font = "36px Raleway";
-				context.fillText("End of Game", canvas.width / 2 - canvas.width / 6, canvas.height / 2);
+				context.fillText("Game Over", canvas.width / 2 - canvas.width / 6, canvas.height / 2);
 				if (player1_points === gameEnds){
 					context.font = "24px Raleway";
 					context.fillText("Nice!", canvas.width / 2 - canvas.width / 14, canvas.height / 2 + 25);
@@ -145,8 +96,6 @@ window.onload = function ()  {
 
 		function run(){
 				ballMovement();
-				bounce();
-				AI_paddle();
 				canvasSettings();
 				Game();
 		}
