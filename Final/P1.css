@@ -1,0 +1,79 @@
+/* get font */
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+/* html and body design */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* body's background image and size */
+body {
+background-image: url("mountainpic.jpg");
+background-size: cover;
+}
+
+/* header link design */
+a {
+  color: #e2ebf7;
+  font-family: Raleway;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+/* header design */
+nav ul {
+  background-color: #4d6f97;
+  color: #e2ebf7;
+  margin: 0;
+  padding: 0;
+  opacity: .8;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* header list design */
+nav ul li {
+  display: inline-block;
+  padding: 20px;
+}
+
+/* header hover design */
+nav ul li:hover {
+  background-color: #374f6c;
+}
+
+/* adjust screen size */
+@media screen and (max-width: 600px) {
+  nav ul li {
+    box-sizing: border-box;
+    padding: 20px;
+    width: 100%;
+  }
+}
+
+/* PLAYER ONE header design */
+.bigheader {
+  background-color: #374f6c;
+  color: #e2ebf7;
+  font-size: 75px;
+  font-family: Raleway;
+  opacity: .8;
+  text-align: center;
+  margin: 0;
+  padding: 20px 0;
+  width: 100%;
+  position: relative;
+}
+
+/* Canvas design */
+#createcanvas {
+  padding: 0;
+  margin:auto;
+  display: block;
+  position: absolute;
+  top: 215;
+  bottom 0;
+  left: 0;
+  right: 0;
+}
