@@ -13,6 +13,7 @@ var paddleHeight = 75;
 var x_speed = 10;
 var y_speed = x_speed;
 var comp_speed = 8;
+var collision = 0;
 
 // player points
 var player1_points = 0;
@@ -67,30 +68,33 @@ window.onload = function ()  {
 		function bounce() {
 			  // Bounce the ball off the top of the screen
 				if (ball2 < 0 && y_speed < 0) {
-						y_speed = -y_speed;
+						y_speed = -y_speed; // if the ball hits the top, then it will go down
 				}
 
 				// Bounce the ball off the bottom of the screen
 				if (ball2 > canvas.height && y_speed > 0) {
-						y_speed = -y_speed;
+						y_speed = -y_speed; // if the ball hits the bottom, it will go top
 				}
 
 				// Bounces off left
+				// if the ball hits the paddle, it bounces off
 				if (ball1 < 0) {
 						if (ball2 > paddle1 && ball2 < paddle1 + paddleHeight) {
 								x_speed =- x_speed;
 								z_speed = ball2 - (paddle1 + paddleHeight/2);
 								y_speed = z_speed * .3;
+								collision += 1;
+								console.log('collision ' + collision);
 						} else {
-								player2_points++;
-								ballReset();
+								player2_points++; // increments points
+								ballReset(); // ball will restart in the middle
 						}
 				}
 
 				// Bounces off right
 				if (ball1 > canvas.width){
 						if (ball2 > paddle2 && ball2 < paddle2 + paddleHeight) {
-								x_speed =- x_speed;
+								x_speed =- x_speed; // if it hits the right side, it will bounce off
 								z_speed = ball2 - (paddle2 + paddleHeight / 2);
 								y_speed = z_speed * .3;
 						} else {
@@ -124,7 +128,7 @@ window.onload = function ()  {
 				// reset game
 				resetGame = true;
 				// stop the game from running
-				clearTimeout(Game);
+				//clearTimeout(Game);
 				context.fillStyle = 'white';
 				context.font = "36px Raleway";
 				context.fillText("End of Game", canvas.width / 2 - canvas.width / 6, canvas.height / 2);
